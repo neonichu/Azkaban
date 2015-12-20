@@ -1,0 +1,3 @@
+[submodule "Externals/Alcatraz"]
+	path = Externals/Alcatraz
+	url = git@github.com:alcatraz/Alcatraz.git
