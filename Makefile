@@ -26,6 +26,7 @@ HEADER_SEARCH_PATHS+=-I$(ALCATRAZ)/Installers -I$(ALCATRAZ)/Packages
 
 HEADERS=$(patsubst %.m,%.h,$(SRCS))
 LIBS=$(wildcard $(BUILD_DIR)/*.a)
+MAIN_SRCS=$(wildcard Sources/*.swift)
 OBJS=$(patsubst %.m,%.o,$(SRCS))
 
 CFLAGS=-fobjc-arc -g3 $(HEADER_SEARCH_PATHS)
@@ -37,8 +38,8 @@ all: $(BUILD_DIR)/azkaban
 Sources/BridgingHeader.h: $(HEADERS)
 	`echo $(HEADERS)|sed -e 's/ /"§#import "/g' -e 's/^/#import "/' -e 's/$$/"/'|tr '§' '\n' >$@`
 
-$(BUILD_DIR)/azkaban: Sources/main.swift $(BUILD_DIR)/libAlcatraz.a lib Sources/BridgingHeader.h
-	$(SWIFTC) -o $@ $< -Xlinker $(BUILD_DIR)/libAlcatraz.a -I$(BUILD_DIR) $(LDFLAGS) \
+$(BUILD_DIR)/azkaban: $(MAIN_SRCS) $(BUILD_DIR)/libAlcatraz.a lib Sources/BridgingHeader.h
+	$(SWIFTC) -o $@ $(MAIN_SRCS) -Xlinker $(BUILD_DIR)/libAlcatraz.a -I$(BUILD_DIR) $(LDFLAGS) \
 		-import-objc-header Sources/BridgingHeader.h -I. $(HEADER_SEARCH_PATHS)
 
 $(BUILD_DIR)/libAlcatraz.a: $(OBJS)
