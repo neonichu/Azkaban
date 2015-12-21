@@ -28,4 +28,23 @@ Group {
       }
     }
   }
+
+  $0.command("uninstall", description: "Uninstall a plugin") { (name: String) in
+    waitFor() {
+      getPackages() { packages in
+        let packages = packages.filter { $0.isInstalled && $0.name == name }
+        packages.forEach() { package in
+          package.removeWithCompletion() { error in
+            if error != nil {
+              print("Failed to uninstall \(package.name): \(error)")
+              exit(1)
+            } else {
+              print("Uninstalled \(package.name)")
+              exit(0)
+            }
+          }
+        }
+      }
+    }
+  }
 }.run()
