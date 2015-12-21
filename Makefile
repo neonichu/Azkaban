@@ -21,19 +21,28 @@ ALL_SRCS+=$(wildcard $(ALCATRAZ)/Helpers/*.m)
 ALL_SRCS+=$(wildcard $(ALCATRAZ)/Installers/*.m)
 SRCS=$(filter-out $(ALCATRAZ)/Helpers/ATZStyleKit.m,$(ALL_SRCS))
 
-CFLAGS=-I$(ALCATRAZ)/Categories -I$(ALCATRAZ)/Helpers -I$(ALCATRAZ)/Installers -I$(ALCATRAZ)/Packages
+HEADER_SEARCH_PATHS=-I$(ALCATRAZ)/Categories -I$(ALCATRAZ)/Helpers
+HEADER_SEARCH_PATHS+=-I$(ALCATRAZ)/Installers -I$(ALCATRAZ)/Packages
 
+HEADERS=$(patsubst %.m,%.h,$(SRCS))
 LIBS=$(wildcard $(BUILD_DIR)/*.a)
-LDFLAGS=$(foreach lib,$(LIBS),-Xlinker $(lib))
 OBJS=$(patsubst %.m,%.o,$(SRCS))
 
-all: $(BUILD_DIR)/azkaban
-	./$<
+CFLAGS=-g3 $(HEADER_SEARCH_PATHS)
+LDFLAGS=$(foreach lib,$(LIBS),-Xlinker $(lib))
 
-$(BUILD_DIR)/azkaban: Sources/main.swift $(BUILD_DIR)/libAlcatraz.a lib
-	$(SWIFTC) -o $@ $< -Xlinker $(BUILD_DIR)/libAlcatraz.a -I$(BUILD_DIR) $(LDFLAGS)
+all: $(BUILD_DIR)/azkaban
+	./$< list
+
+Sources/BridgingHeader.h: $(HEADERS)
+	`echo $(HEADERS)|sed -e 's/ /"§#import "/g' -e 's/^/#import "/' -e 's/$$/"/'|tr '§' '\n' >$@`
+
+$(BUILD_DIR)/azkaban: Sources/main.swift $(BUILD_DIR)/libAlcatraz.a lib Sources/BridgingHeader.h
+	$(SWIFTC) -o $@ $< -Xlinker $(BUILD_DIR)/libAlcatraz.a -I$(BUILD_DIR) $(LDFLAGS) \
+		-import-objc-header Sources/BridgingHeader.h -I. $(HEADER_SEARCH_PATHS)
 
 $(BUILD_DIR)/libAlcatraz.a: $(OBJS)
+	@mkdir -p $(BUILD_DIR)
 	libtool -o $@ $^
 
 lib:
