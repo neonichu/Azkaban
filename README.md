@@ -1,6 +1,6 @@
 # Azkaban
 
-:warning: WIP - this won't work with upstream Alcatraz right now.
+![Sirius Black, the prisoner of Azkaban](yolo.jpg)
 
 A CLI to [Alcatraz][1], the Xcode package manager.
 
@@ -39,5 +39,26 @@ $ azkaban install https://github.com/johnno1962/Refactorator
 Installed Refactorator
 ```
 
+## Installation
+
+You can install Azkaban via [Homebrew][3]:
+
+```bash
+$ brew tap neonichu/formulae
+$ brew install azkaban
+```
+
+You will need to have [Swift 2.2][4] installed already for the installation to work.
+
+## Help needed
+
+Follow [@NeoNacho](https://twitter.com/NeoNacho) to help me beat [@orta](https://twitter.com/orta) in followers count.
+
+## Caveats
+
+:warning: This won't work with upstream Alcatraz right now.
+
 [1]: http://alcatraz.io
 [2]: https://github.com/alcatraz/alcatraz-packages
+[3]: http://brew.sh
+[4]: https://swift.org
