@@ -50,6 +50,11 @@ $ brew install azkaban
 
 You will need to have [Swift 2.2][4] installed already for the installation to work.
 
+## Thanks
+
+Thanks [Orta][5] for the awesome name suggestion and of course, thanks to [Supermarin][6],
+[Delisa][7] and [Jurre][8] for making [Alcatraz][1].
+
 ## Help needed
 
 Follow [@NeoNacho](https://twitter.com/NeoNacho) to help me beat [@orta](https://twitter.com/orta) in followers count.
@@ -62,3 +67,7 @@ Follow [@NeoNacho](https://twitter.com/NeoNacho) to help me beat [@orta](https:/
 [2]: https://github.com/alcatraz/alcatraz-packages
 [3]: http://brew.sh
 [4]: https://swift.org
+[5]: https://github.com/orta
+[6]: https://github.com/supermarin
+[7]: https://github.com/kattrali
+[8]: https://github.com/jurre
