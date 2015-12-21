@@ -19,6 +19,30 @@ func waitFor(block: () -> ()) {
 }
 
 Group {
+  $0.command("install", description: "Install a plugin") { (name: String) in
+    waitFor() {
+      getPackages() { packages in
+        let packages = packages.filter { $0.name == name }
+        packages.forEach() { package in
+          if package.isInstalled {
+            print("\(package.name) is already installed")
+            exit(0)
+          } else {
+            package.installWithProgress({ _, _ in print("") }) { error in
+              if error != nil {
+                print("Failed to install \(package.name): \(error)")
+                exit(1)
+              } else {
+                print("Installed \(package.name)")
+                exit(0)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   $0.command("list", description: "List installed plugins") {
     waitFor() {
       getPackages() { packages in
