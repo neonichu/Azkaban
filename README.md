@@ -62,7 +62,7 @@ Follow [@NeoNacho](https://twitter.com/NeoNacho) to help me beat [@orta](https:/
 ## Caveats
 
 :warning: This won't work with upstream Alcatraz right now if you are building from source. Just
-use the installation instructions.
+use the [Installation instructions](#installation).
 
 [1]: http://alcatraz.io
 [2]: https://github.com/alcatraz/alcatraz-packages
