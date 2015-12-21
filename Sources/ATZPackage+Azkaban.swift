@@ -18,16 +18,19 @@ extension ATZPackage {
     return synchronousAction(self.installWithProgress)
   }
 
-  func installAndReport() {
+  func installAndReport() -> Bool {
     if isInstalled {
       print("\(name) is already installed")
     } else {
       if let error = install() {
         print("Failed to install \(name): \(error)")
+        return false
       } else {
         print("Installed \(name)")
       }
     }
+
+    return true
   }
 
   private func remove() -> NSError? {
