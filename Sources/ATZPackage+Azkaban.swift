@@ -4,7 +4,7 @@ extension ATZPackage {
   private func synchronousAction(action: ((String?, CGFloat) -> (), (NSError?) -> ()) -> ()) -> NSError? {
     var error: NSError?
 
-    makeSynchronous() { semaphore in
+    makeSynchronous { semaphore in
       action({ _, _ in print("") }) { err in
         error = err
         dispatch_semaphore_signal(semaphore)
@@ -36,8 +36,8 @@ extension ATZPackage {
   private func remove() -> NSError? {
     var error: NSError?
 
-    makeSynchronous() { semaphore in
-      self.removeWithCompletion() { err in
+    makeSynchronous { semaphore in
+      self.removeWithCompletion { err in
         error = err
         dispatch_semaphore_signal(semaphore)
       }
