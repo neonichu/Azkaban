@@ -44,8 +44,7 @@ Installed Refactorator
 You can install Azkaban via [Homebrew][3]:
 
 ```bash
-$ brew tap neonichu/formulae
-$ brew install azkaban
+$ brew install neonichu/formulae/azkaban
 ```
 
 You will need to have [Swift 2.2][4] installed already for the installation to work.
