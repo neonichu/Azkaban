@@ -10,12 +10,15 @@ Install a plugin listed on [Alcatraz Packages][2]:
 
 ```bash
 $ azkaban install FixCode
+[...]
+Installed FixCode
 ```
 
 Uninstall a plugin:
 
 ```bash
 $ azkaban uninstall BBUFullIssueNavigator
+Uninstalled BBUFullIssueNavigator
 ```
 
 List installed plugins:
@@ -33,6 +36,7 @@ You can also install a plugin via its repository URL for testing:
 
 ```bash
 $ azkaban install https://github.com/johnno1962/Refactorator
+Installed Refactorator
 ```
 
 [1]: http://alcatraz.io
