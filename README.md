@@ -1,6 +1,6 @@
 # Azkaban
 
-:warning: WIP
+:warning: WIP - this won't work with upstream Alcatraz right now.
 
 A CLI to [Alcatraz][1], the Xcode package manager.
 
