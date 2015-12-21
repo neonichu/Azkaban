@@ -28,7 +28,7 @@ HEADERS=$(patsubst %.m,%.h,$(SRCS))
 LIBS=$(wildcard $(BUILD_DIR)/*.a)
 OBJS=$(patsubst %.m,%.o,$(SRCS))
 
-CFLAGS=-g3 $(HEADER_SEARCH_PATHS)
+CFLAGS=-fobjc-arc -g3 $(HEADER_SEARCH_PATHS)
 LDFLAGS=$(foreach lib,$(LIBS),-Xlinker $(lib))
 
 all: $(BUILD_DIR)/azkaban
