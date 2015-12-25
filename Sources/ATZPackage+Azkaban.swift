@@ -53,4 +53,16 @@ extension ATZPackage {
       print("Uninstalled \(name)")
     }
   }
+
+  private func update() -> NSError? {
+    return synchronousAction(self.updateWithProgress)
+  }
+
+  func updateAndReport() {
+    if let error = update() {
+      print("Failed to update \(name): \(error)")
+    } else {
+      print("Updated \(name)")
+    }
+  }
 }

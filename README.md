@@ -21,6 +21,12 @@ $ azkaban uninstall BBUFullIssueNavigator
 Uninstalled BBUFullIssueNavigator
 ```
 
+Update all installed plugins:
+
+```bash
+$ azkaban update
+```
+
 List installed plugins:
 
 ```bash

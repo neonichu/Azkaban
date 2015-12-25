@@ -29,4 +29,11 @@ Group {
       packages.forEach { $0.removeAndReport() }
     }
   }
+
+  $0.command("update", description: "Update all installed plugins") {
+    waitForPackages { packages in
+      let packages = packages.filter { $0.isInstalled }
+      packages.forEach { $0.updateAndReport() }
+    }
+  }
 }.run()
