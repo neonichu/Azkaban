@@ -10,6 +10,26 @@ private func getPackages(completion: [ATZPackage] -> ()) {
   }
 }
 
+private enum Errors: ErrorType {
+  case CouldNotReadFile(String)
+}
+
+func parsePackagesAtPath(path: String) throws -> [ATZPackage] {
+  if let data = NSData(contentsOfFile: path) {
+    let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+
+    if let dict = JSON["packages"] as? [NSObject : AnyObject] {
+      let packages = ATZPackageFactory.createPackagesFromDicts(dict)?.flatMap { $0 as? ATZPackage }
+
+      if let packages = packages {
+        return packages
+      }
+    }
+  }
+
+  throw Errors.CouldNotReadFile(path)
+}
+
 func waitForPackages(completion: [ATZPackage] throws -> ()) {
   waitFor {
     getPackages { packages in

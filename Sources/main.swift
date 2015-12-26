@@ -1,8 +1,9 @@
 import Commander
 
 Group {
-  $0.command("install", description: "Install a plugin") { (name: String) in
-    if let url = NSURL(string: name), lastComponent = url.lastPathComponent {
+  $0.command("install", Argument("name"), Option("packages", ""),
+      description: "Install a plugin") { (name: String, packages: String) in
+    if let url = NSURL(string: name), lastComponent = url.lastPathComponent where name.hasPrefix("http") {
       waitFor { queue {
         let plugin = ATZPlugin(dictionary: [ "name": lastComponent, "url": name ])
         let result = plugin.installAndReport()
@@ -10,9 +11,15 @@ Group {
       } }
     }
 
-    waitForPackages { packages in
+    let packageClosure = { (packages: [ATZPackage]) in
       let packages = packages.filter { $0.name == name }
       packages.forEach { $0.installAndReport() }
+    }
+
+    if packages != "" {
+      packageClosure(try parsePackagesAtPath(packages))
+    } else {
+      waitForPackages(packageClosure)
     }
   }
 
