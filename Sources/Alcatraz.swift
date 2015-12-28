@@ -1,5 +1,32 @@
 import Foundation
 
+enum ATZPackageType: String {
+  case ColorScheme = "color_scheme"
+  case FileTemplate = "file_template"
+  case Plugin = "plugin"
+  case ProjectTemplate = "project_template"
+}
+
+func packageType(package: ATZPackage) throws -> ATZPackageType {
+  if (package.isKindOfClass(ATZColorScheme.self)) {
+    return .ColorScheme
+  }
+
+  if (package.isKindOfClass(ATZFileTemplate.self)) {
+    return .FileTemplate
+  }
+
+  if (package.isKindOfClass(ATZPlugin.self)) {
+    return .Plugin
+  }
+
+  if (package.isKindOfClass(ATZProjectTemplate.self)) {
+    return .ProjectTemplate
+  }
+
+  throw Errors.UnknownPackageType(NSStringFromClass(package.dynamicType))
+}
+
 private func getPackages(completion: [ATZPackage] -> ()) {
   let downloader = ATZDownloader()
   downloader.downloadPackageListWithCompletion { packageList, _ in
@@ -10,8 +37,9 @@ private func getPackages(completion: [ATZPackage] -> ()) {
   }
 }
 
-private enum Errors: ErrorType {
+enum Errors: ErrorType {
   case CouldNotReadFile(String)
+  case UnknownPackageType(String)
 }
 
 func parsePackagesAtPath(path: String) throws -> [ATZPackage] {
