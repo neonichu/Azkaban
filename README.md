@@ -64,11 +64,6 @@ Thanks [Orta][5] for the awesome name suggestion and of course, thanks to [Super
 
 Follow [@NeoNacho](https://twitter.com/NeoNacho) to help me beat [@orta](https://twitter.com/orta) in followers count.
 
-## Caveats
-
-:warning: This won't work with upstream Alcatraz right now if you are building from source. Just
-use the [Installation instructions](#installation).
-
 [1]: http://alcatraz.io
 [2]: https://github.com/alcatraz/alcatraz-packages
 [3]: http://brew.sh
