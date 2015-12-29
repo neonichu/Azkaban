@@ -10,7 +10,8 @@ func iterateEnum<T: Hashable>(_: T.Type) -> AnyGenerator<T> {
 }
 
 Group {
-  $0.command("available", Option("type", ""), description: "List available plugins") { type in
+  $0.command("available", Option("type", "", description: "Filter the list by type"),
+      description: "List available plugins") { type in
     waitForPackages { packages in
       let packages = try packages.filter { package in
         if package.isInstalled { return false }
@@ -30,7 +31,8 @@ Group {
     iterateEnum(ATZPackageType).forEach { print($0.rawValue) }
   }
 
-  $0.command("install", Argument("name"), Option("packages", ""),
+  $0.command("install", Argument("name"),
+      Option("packages", "", description: "Use a local JSON file as package list"),
       description: "Install a plugin") { (name: String, packages: String) in
     if let url = NSURL(string: name), lastComponent = url.lastPathComponent where name.hasPrefix("http") {
       waitFor { queue {
