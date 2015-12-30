@@ -2,10 +2,11 @@ import Commander
 
 // from: http://stackoverflow.com/a/28341290
 func iterateEnum<T: Hashable>(_: T.Type) -> AnyGenerator<T> {
-  var i = 0
+  var i = -1
   return AnyGenerator {
+    i += 1
     let next = withUnsafePointer(&i) { UnsafePointer<T>($0).memory }
-    return next.hashValue == i++ ? next : nil
+    return next.hashValue == i ? next : nil
   }
 }
 
