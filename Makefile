@@ -26,7 +26,7 @@ HEADER_SEARCH_PATHS+=-I$(ALCATRAZ)/Installers -I$(ALCATRAZ)/Packages
 
 HEADERS=$(patsubst %.m,%.h,$(SRCS))
 LIBS=$(wildcard $(BUILD_DIR)/*.a)
-MAIN_SRCS=$(wildcard Sources/*.swift)
+MAIN_SRCS=$(wildcard Sources/azkaban/*.swift)
 OBJS=$(patsubst %.m,%.o,$(SRCS))
 
 CFLAGS=-fobjc-arc -g3 $(HEADER_SEARCH_PATHS)
