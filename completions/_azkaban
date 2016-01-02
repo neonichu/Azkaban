@@ -1,0 +1,51 @@
+#compdef azkaban
+
+_azkaban() {
+  if [[ ${#words[@]} -eq 2 ]]; then
+    local -a _subcommands
+    _subcommands=(
+      "--help"
+      "available"
+      "available_types"
+      "install"
+      "list"
+      "uninstall"
+      "update"
+    )
+    _describe -t commands "azkaban subcommands" _subcommands
+  else
+    case "$words[2]" in
+      install)
+        IFS=$'\n' packages=($(azkaban available) $(azkaban list))
+        if [[ $packages != "" ]]; then
+          _values "packages" $packages
+        fi
+      ;;
+      uninstall)
+        IFS=$'\n' packages=($(azkaban list))
+        if [[ $packages != "" ]]; then
+          _values "packages" $packages
+        fi
+      ;;
+      available)
+        case "$words[3]" in
+          "--type")
+            IFS=$'\n' types=($(azkaban available_types))
+            if [[ $types != "" ]]; then
+              _values "package types" $types
+            fi
+          ;;
+          *)
+            local -a _options
+            _options=(
+              "--type:Filter the list by type"
+            )
+            _describe -t options "azkaban available options" _options
+            ;;
+        esac
+      ;;
+    esac
+  fi
+}
+
+_azkaban "$@"
