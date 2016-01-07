@@ -1,4 +1,19 @@
+import Chores
 import Commander
+
+extension String {
+  private func split(char: Character) -> [String] {
+    return self.characters.split { $0 == char }.map(String.init)
+  }
+
+  var lines: [String] {
+    return split("\n")
+  }
+
+  var words: [String] {
+    return split(" ")
+  }
+}
 
 // from: http://stackoverflow.com/a/28341290
 func iterateEnum<T: Hashable>(_: T.Type) -> AnyGenerator<T> {
@@ -59,6 +74,20 @@ Group {
     waitForPackages { packages in
       let packages = packages.filter { $0.isInstalled }.map { $0.name as String }
       print(packages.joinWithSeparator("\n"))
+    }
+  }
+
+  $0.command("reset", description: "Resets loading preferences for currently active Xcode") {
+    let result = >["xcodebuild", "-version"]
+    if let version = result.stdout.lines.first?.words.last {
+      let result = >["defaults", "delete", "com.apple.dt.Xcode", "DVTPlugInManagerNonApplePlugIns-Xcode-\(version)"]
+
+      if result.result != 0 {
+        print(result.stderr)
+      }
+    } else {
+      print(result.stderr)
+      exit(1)
     }
   }
 
