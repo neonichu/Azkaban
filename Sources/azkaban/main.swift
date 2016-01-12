@@ -104,4 +104,4 @@ Group {
       packages.forEach { $0.updateAndReport() }
     }
   }
-}.run()
+}.run("0.4.0")
